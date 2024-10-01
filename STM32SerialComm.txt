@@ -1,0 +1,43 @@
+/*****************************************************************************************************************************
+**********************************    Author  : Ehab Magdy Abdullah                      *************************************
+**********************************    Linkedin: https://www.linkedin.com/in/ehabmagdyy/  *************************************
+**********************************    Youtube : https://www.youtube.com/@EhabMagdyy      *************************************
+******************************************************************************************************************************/
+
+-> Copy & Paste these lines in your stm32 code in their sections
+
+/* USER CODE BEGIN 2 */
+
+// messages to be sent
+uint8_t message_1[] = "I'm good, Thanks C++";
+uint8_t message_2[] = "See you later <3";
+uint8_t end[1] = "e";
+// receive buffer
+uint8_t buffer[100];
+//
+uint8_t counter = 0;
+
+/* USER CODE END 2 */
+
+/* Infinite loop */
+/* USER CODE BEGIN WHILE */
+while (1)
+{
+  if(counter <= 2)
+  {
+    HAL_Delay(1000);
+    // Receiving data
+    HAL_UART_Receive(&huart1, (uint8_t*)buffer, 25, HAL_MAX_DELAY);
+    HAL_Delay(3000);
+    // Sending message 1
+    HAL_UART_Transmit(&huart1, (uint8_t*)message_1, sizeof(message_1), HAL_MAX_DELAY);
+    HAL_Delay(3000);
+    // Sending message 2
+    HAL_UART_Transmit(&huart1, (uint8_t*)message_2, sizeof(message_2), HAL_MAX_DELAY);
+    HAL_Delay(3000);
+    // Send 'e' to end communication with C++
+    HAL_UART_Transmit(&huart1, (uint8_t*)end, sizeof(end), HAL_MAX_DELAY);
+    counter++;
+  }
+}
+/* USER CODE END WHILE */
